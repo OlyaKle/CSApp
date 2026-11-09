@@ -1,0 +1,304 @@
+openapi: 3.0.3
+info:
+  title: Department Productivity Analytics API
+  version: 1.0.0
+  description: >
+    API сервиса анализа производительности отдела с ИИ-помощником.
+    Асинхронные операции возвращают идентификатор задания; состояние можно
+    получить отдельным запросом.
+servers:
+  - url: https://api.example.com/v1
+    description: Пример адреса; заменить на адрес развёрнутой системы
+security:
+  - bearerAuth: []
+tags:
+  - name: Tasks
+    description: Управление задачами
+  - name: Imports
+    description: Импорт и проверка данных
+  - name: Analytics
+    description: Отчёты и показатели
+  - name: AI
+    description: ИИ-анализ и рекомендации
+paths:
+  /tasks:
+    get:
+      tags: [Tasks]
+      summary: Получить список задач
+      parameters:
+        - in: query
+          name: departmentId
+          schema: { type: string, format: uuid }
+        - in: query
+          name: status
+          schema: { type: string, enum: [new, in_progress, testing, completed, overdue] }
+        - in: query
+          name: page
+          schema: { type: integer, minimum: 1, default: 1 }
+        - in: query
+          name: pageSize
+          schema: { type: integer, minimum: 1, maximum: 100, default: 20 }
+      responses:
+        '200':
+          description: Список задач
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items: { $ref: '#/components/schemas/Task' }
+                  total: { type: integer }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+    post:
+      tags: [Tasks]
+      summary: Создать задачу
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/TaskCreate' }
+      responses:
+        '201':
+          description: Задача создана
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Task' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+  /tasks/{taskId}:
+    patch:
+      tags: [Tasks]
+      summary: Изменить задачу
+      parameters:
+        - $ref: '#/components/parameters/TaskId'
+        - in: header
+          name: If-Match
+          required: true
+          description: Версия задачи для защиты от перезаписи параллельных изменений
+          schema: { type: integer, minimum: 1 }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/TaskUpdate' }
+      responses:
+        '200':
+          description: Задача обновлена
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Task' }
+        '409':
+          description: Задача уже изменена другим пользователем
+        '404': { $ref: '#/components/responses/NotFound' }
+  /imports:
+    post:
+      tags: [Imports]
+      summary: Загрузить пакет данных для проверки
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [file, departmentId]
+              properties:
+                file: { type: string, format: binary }
+                departmentId: { type: string, format: uuid }
+      responses:
+        '202':
+          description: Импорт принят в обработку
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/JobAccepted' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+  /imports/{packageId}/validation:
+    get:
+      tags: [Imports]
+      summary: Получить результат проверки пакета данных
+      parameters:
+        - in: path
+          name: packageId
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        '200':
+          description: Результат проверки
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ValidationResult' }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /reports:
+    post:
+      tags: [Analytics]
+      summary: Запустить формирование аналитического отчёта
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [departmentId, packageId, dateFrom, dateTo]
+              properties:
+                departmentId: { type: string, format: uuid }
+                packageId: { type: string, format: uuid }
+                dateFrom: { type: string, format: date }
+                dateTo: { type: string, format: date }
+      responses:
+        '202':
+          description: Формирование отчёта запущено
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/JobAccepted' }
+        '422':
+          description: Пакет данных не прошёл проверку
+  /reports/{reportId}:
+    get:
+      tags: [Analytics]
+      summary: Получить аналитический отчёт
+      parameters:
+        - in: path
+          name: reportId
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        '200':
+          description: Отчёт и показатели
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Report' }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /ai-analyses:
+    post:
+      tags: [AI]
+      summary: Запустить ИИ-анализ отчёта
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [reportId]
+              properties:
+                reportId: { type: string, format: uuid }
+      responses:
+        '202':
+          description: ИИ-анализ принят в обработку
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/JobAccepted' }
+  /recommendations/{recommendationId}:
+    patch:
+      tags: [AI]
+      summary: Принять или отклонить рекомендацию
+      parameters:
+        - in: path
+          name: recommendationId
+          required: true
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [decision]
+              properties:
+                decision: { type: string, enum: [accepted, rejected] }
+                comment: { type: string, maxLength: 1000 }
+      responses:
+        '200':
+          description: Решение сохранено
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Recommendation' }
+        '404': { $ref: '#/components/responses/NotFound' }
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  parameters:
+    TaskId:
+      in: path
+      name: taskId
+      required: true
+      schema: { type: string, format: uuid }
+  responses:
+    Unauthorized:
+      description: Требуется авторизация
+    BadRequest:
+      description: Некорректные входные данные
+    NotFound:
+      description: Объект не найден
+  schemas:
+    Task:
+      type: object
+      required: [id, title, status, deadline, version]
+      properties:
+        id: { type: string, format: uuid }
+        title: { type: string }
+        description: { type: string }
+        departmentId: { type: string, format: uuid }
+        assigneeId: { type: string, format: uuid }
+        status: { type: string, enum: [new, in_progress, testing, completed, overdue] }
+        deadline: { type: string, format: date }
+        version: { type: integer }
+    TaskCreate:
+      type: object
+      required: [title, departmentId, deadline]
+      properties:
+        title: { type: string, minLength: 1, maxLength: 200 }
+        description: { type: string }
+        departmentId: { type: string, format: uuid }
+        assigneeId: { type: string, format: uuid }
+        deadline: { type: string, format: date }
+    TaskUpdate:
+      type: object
+      properties:
+        title: { type: string, maxLength: 200 }
+        assigneeId: { type: string, format: uuid }
+        deadline: { type: string, format: date }
+        status: { type: string, enum: [new, in_progress, testing, completed, overdue] }
+    JobAccepted:
+      type: object
+      required: [jobId, status]
+      properties:
+        jobId: { type: string, format: uuid }
+        status: { type: string, enum: [queued] }
+    ValidationResult:
+      type: object
+      properties:
+        packageId: { type: string, format: uuid }
+        status: { type: string, enum: [pending, valid, invalid] }
+        errors:
+          type: array
+          items: { type: string }
+    Report:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        departmentId: { type: string, format: uuid }
+        packageId: { type: string, format: uuid }
+        dateFrom: { type: string, format: date }
+        dateTo: { type: string, format: date }
+        status: { type: string, enum: [queued, processing, ready, failed] }
+        indicators:
+          type: array
+          items: { $ref: '#/components/schemas/Indicator' }
+    Indicator:
+      type: object
+      properties:
+        name: { type: string }
+        value: { type: number }
+        unit: { type: string }
+    Recommendation:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        reportId: { type: string, format: uuid }
+        text: { type: string }
+        decision: { type: string, enum: [pending, accepted, rejected] }
+        comment: { type: string }
