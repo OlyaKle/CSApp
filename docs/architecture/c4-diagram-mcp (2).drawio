@@ -1,0 +1,136 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="app.diagrams.net" agent="ChatGPT" version="24.7.17" type="device">
+  <diagram name="System Context" id="context">
+    <mxGraphModel dx="1400" dy="850" grid="1" gridSize="10" page="1" pageWidth="1400" pageHeight="850">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="t" value="C4 — System Context" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#7D1018;strokeColor=#7D1018;strokeWidth=2;fontSize=24;fontColor=#FFFFFF;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="25" width="1320" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="user" value="Сотрудник / руководитель отдела&amp;#xa;Работает с задачами, отчётами и рекомендациями" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E6E5;strokeColor=#7D1018;strokeWidth=2;fontSize=14;fontColor=#171313;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="55" y="300" width="245" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="client" value="ИИ-клиент&amp;#xa;Принимает запрос пользователя и выбирает инструменты MCP" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8D1D0;strokeColor=#7D1018;strokeWidth=2;fontSize=14;fontColor=#171313;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="390" y="125" width="280" height="125" as="geometry" />
+        </mxCell>
+        <mxCell id="system" value="Сервис анализа производительности отдела&amp;#xa;[Программная система]&amp;#xa;Управление задачами, импорт, аналитика и ИИ-анализ" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#7D1018;strokeColor=#171313;strokeWidth=2;fontSize=16;fontColor=#FFFFFF;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="780" y="285" width="390" height="175" as="geometry" />
+        </mxCell>
+        <mxCell id="note" value="MCP — отдельный адаптер для взаимодействия ИИ с системой, а не пятый предметный контекст." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8F1F0;strokeColor=#9A555A;strokeWidth=2;fontSize=14;fontColor=#171313;" vertex="1" parent="1">
+          <mxGeometry x="780" y="535" width="390" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="a1" value="Запрос пользователя" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;strokeColor=#7D1018;strokeWidth=2;fontSize=12;" edge="1" parent="1" source="user" target="client">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a2" value="MCP / JSON-RPC" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;strokeColor=#7D1018;strokeWidth=2;fontSize=12;" edge="1" parent="1" source="client" target="system">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a3" value="Результат вызова" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;strokeColor=#7D1018;strokeWidth=2;fontSize=12;dashed=1;dashPattern=8 5;" edge="1" parent="1" source="system" target="client">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="Container" id="container">
+    <mxGraphModel dx="1600" dy="1120" grid="1" gridSize="10" page="1" pageWidth="1600" pageHeight="1120">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="t" value="C4 — Container Diagram" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#7D1018;strokeColor=#7D1018;strokeWidth=2;fontSize=24;fontColor=#FFFFFF;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="30" y="20" width="1540" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="user" value="Пользователь&amp;#xa;Сотрудник / руководитель" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E6E5;strokeColor=#7D1018;strokeWidth=2;fontSize=14;fontColor=#171313;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="315" width="190" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="web" value="Web-клиент&amp;#xa;Браузер&amp;#xa;Интерфейс и базовые проверки ввода" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8D1D0;strokeColor=#7D1018;strokeWidth=2;fontSize=14;fontColor=#171313;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="290" y="120" width="240" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="ai" value="ИИ-клиент&amp;#xa;Выбирает инструменты и ресурсы MCP" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8D1D0;strokeColor=#7D1018;strokeWidth=2;fontSize=14;fontColor=#171313;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="290" y="500" width="240" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="mcp" value="MCP-сервер&amp;#xa;Отдельный адаптер&amp;#xa;JSON-RPC, JSON Schema&amp;#xa;Проверка JWT и прав&amp;#xa;Вызов внутреннего API" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#7D1018;strokeColor=#171313;strokeWidth=2;fontSize=15;fontColor=#FFFFFF;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="630" y="465" width="310" height="190" as="geometry" />
+        </mxCell>
+        <mxCell id="app" value="Серверное приложение&amp;#xa;Модульный монолит / внутренний API" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E6E5;strokeColor=#7D1018;strokeWidth=2;fontSize=15;fontColor=#171313;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="270" width="330" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="boundary" value="Четыре предметных контекста" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#171313;strokeColor=#171313;strokeWidth=2;fontSize=15;fontColor=#FFFFFF;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1010" y="420" width="350" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="tasks" value="Управление задачами&amp;#xa;Агрегат: Рабочая задача" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8D1D0;strokeColor=#9A555A;strokeWidth=2;fontSize=14;fontColor=#171313;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="510" width="330" height="85" as="geometry" />
+        </mxCell>
+        <mxCell id="imports" value="Импорт данных&amp;#xa;Агрегат: Пакет данных" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8D1D0;strokeColor=#9A555A;strokeWidth=2;fontSize=14;fontColor=#171313;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="625" width="330" height="85" as="geometry" />
+        </mxCell>
+        <mxCell id="analytics" value="Аналитика отдела&amp;#xa;Агрегат: Аналитический отчёт" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8D1D0;strokeColor=#9A555A;strokeWidth=2;fontSize=14;fontColor=#171313;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="740" width="330" height="85" as="geometry" />
+        </mxCell>
+        <mxCell id="ai_mod" value="ИИ-анализ&amp;#xa;Рекомендации" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8D1D0;strokeColor=#9A555A;strokeWidth=2;fontSize=14;fontColor=#171313;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="855" width="330" height="85" as="geometry" />
+        </mxCell>
+        <mxCell id="db" value="PostgreSQL&amp;#xa;Задачи, пакеты данных, отчёты, показатели и рекомендации" style="shape=cylinder;whiteSpace=wrap;html=1;fillColor=#F7E1E0;strokeColor=#7D1018;strokeWidth=2;fontSize=13;fontColor=#171313;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1400" y="535" width="170" height="145" as="geometry" />
+        </mxCell>
+        <mxCell id="mq" value="RabbitMQ&amp;#xa;Асинхронные доменные события" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E6E5;strokeColor=#7D1018;strokeWidth=2;fontSize=13;fontColor=#171313;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1400" y="790" width="170" height="115" as="geometry" />
+        </mxCell>
+        <mxCell id="auth" value="Контекст авторизации&amp;#xa;Пользователь, роль и department_id берутся из проверенного JWT. Данные, переданные ИИ-клиентом, не считаются доверенными." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8F1F0;strokeColor=#9A555A;strokeWidth=2;fontSize=13;fontColor=#171313;" vertex="1" parent="1">
+          <mxGeometry x="625" y="760" width="315" height="155" as="geometry" />
+        </mxCell>
+        <mxCell id="rule" value="MCP не подключается напрямую к PostgreSQL и не дублирует бизнес-логику." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#171313;strokeColor=#171313;strokeWidth=2;fontSize=13;fontColor=#FFFFFF;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="285" y="850" width="250" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="b1" value="Web-интерфейс" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;strokeColor=#7D1018;strokeWidth=2;fontSize=12;" edge="1" parent="1" source="user" target="web">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="b2" value="Запрос к ИИ" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;strokeColor=#7D1018;strokeWidth=2;fontSize=12;" edge="1" parent="1" source="user" target="ai">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="b3" value="MCP / JSON-RPC" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;strokeColor=#7D1018;strokeWidth=2;fontSize=12;" edge="1" parent="1" source="ai" target="mcp">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="b4" value="Внутренний API" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;strokeColor=#7D1018;strokeWidth=2;fontSize=12;" edge="1" parent="1" source="mcp" target="app">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="b5" value="HTTPS / JSON" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;strokeColor=#7D1018;strokeWidth=2;fontSize=12;" edge="1" parent="1" source="web" target="app">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="mod0" value="Внутренние интерфейсы" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;strokeColor=#7D1018;strokeWidth=2;fontSize=12;" edge="1" parent="1" source="app" target="tasks">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="data0" value="Чтение / запись" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;strokeColor=#7D1018;strokeWidth=2;fontSize=12;dashed=1;dashPattern=8 5;" edge="1" parent="1" source="tasks" target="db">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="mod1" value="Внутренние интерфейсы" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;strokeColor=#7D1018;strokeWidth=2;fontSize=12;" edge="1" parent="1" source="app" target="imports">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="data1" value="Чтение / запись" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;strokeColor=#7D1018;strokeWidth=2;fontSize=12;dashed=1;dashPattern=8 5;" edge="1" parent="1" source="imports" target="db">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="mod2" value="Внутренние интерфейсы" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;strokeColor=#7D1018;strokeWidth=2;fontSize=12;" edge="1" parent="1" source="app" target="analytics">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="data2" value="Чтение / запись" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;strokeColor=#7D1018;strokeWidth=2;fontSize=12;dashed=1;dashPattern=8 5;" edge="1" parent="1" source="analytics" target="db">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="mod3" value="Внутренние интерфейсы" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;strokeColor=#7D1018;strokeWidth=2;fontSize=12;" edge="1" parent="1" source="app" target="ai_mod">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="data3" value="Чтение / запись" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;strokeColor=#7D1018;strokeWidth=2;fontSize=12;dashed=1;dashPattern=8 5;" edge="1" parent="1" source="ai_mod" target="db">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="mq1" value="Публикация событий" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;strokeColor=#7D1018;strokeWidth=2;fontSize=12;dashed=1;dashPattern=8 5;" edge="1" parent="1" source="analytics" target="mq">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="mq2" value="Асинхронный ИИ-анализ" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;strokeColor=#7D1018;strokeWidth=2;fontSize=12;dashed=1;dashPattern=8 5;" edge="1" parent="1" source="mq" target="ai_mod">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="auth1" value="Проверка доступа" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;strokeColor=#7D1018;strokeWidth=2;fontSize=12;dashed=1;dashPattern=8 5;" edge="1" parent="1" source="mcp" target="auth">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
